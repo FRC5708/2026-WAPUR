@@ -18,12 +18,20 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.CreepMode;
 import frc.robot.commands.Intake;
+import frc.robot.commands.ZeroEncoders;
+import frc.robot.commands.changeSetpoint;
+import frc.robot.commands.elevatorDown;
+import frc.robot.commands.elevatorUp;
+import frc.robot.commands.manualToggly;
+import frc.robot.commands.travelToSetpoint;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.Loader;
 
 public class RobotContainer {
-  private static Loader m_Loader = new Loader();
+  private static Loader m_Loader;
+  private static ElevatorSubsystem m_elevator;
 
   public double speedScalar = Constants.fastSpeed;
   private double MaxSpeed =
@@ -51,6 +59,9 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    m_elevator = new ElevatorSubsystem();
+    m_Loader = new Loader();
+
     autoChooser = AutoBuilder.buildAutoChooser("Tests");
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -66,25 +77,38 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new Intake(m_Loader, false));
     controller.leftTrigger().whileTrue(new Intake(m_Loader, true));
 
-    // Note that X is defined as forward according to WPILib convention,
-    // and Y is defined as to the left according to WPILib convention.
-    drivetrain.setDefaultCommand(
-        // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(
-            () ->
-                drive
-                    .withVelocityX(
-                        -controller.getLeftY()
-                            * MaxSpeed
-                            * speedScalar) // Drive forward with negative Y (forward)
-                    .withVelocityY(
-                        -controller.getLeftX()
-                            * MaxSpeed
-                            * speedScalar) // Drive left with negative X (left)
-                    .withRotationalRate(
-                        -controller.getRightX()
-                            * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            ));
+    //elevator
+    m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
+    controller.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
+    controller.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
+    controller.x().onTrue(new changeSetpoint(m_elevator, 0));
+    controller.povUp().onTrue(new changeSetpoint(m_elevator, 1));
+    controller.povRight().onTrue(new changeSetpoint(m_elevator, 2));
+    controller.povDown().onTrue(new changeSetpoint(m_elevator, 3));
+    controller.povLeft().onTrue(new changeSetpoint(m_elevator, 4));
+
+    controller.y().onTrue(new manualToggly(m_elevator));
+    controller.back().onTrue(new ZeroEncoders(m_elevator));
+
+    // // Note that X is defined as forward according to WPILib convention,
+    // // and Y is defined as to the left according to WPILib convention.
+    // drivetrain.setDefaultCommand(
+    //     // Drivetrain will execute this command periodically
+    //     drivetrain.applyRequest(
+    //         () ->
+    //             drive
+    //                 .withVelocityX(
+    //                     -controller.getLeftY()
+    //                         * MaxSpeed
+    //                         * speedScalar) // Drive forward with negative Y (forward)
+    //                 .withVelocityY(
+    //                     -controller.getLeftX()
+    //                         * MaxSpeed
+    //                         * speedScalar) // Drive left with negative X (left)
+    //                 .withRotationalRate(
+    //                     -controller.getRightX()
+    //                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
+    //         ));
 
     // Idle while the robot is disabled. This ensures the configured
     // neutral mode is applied to the drive motors while disabled.

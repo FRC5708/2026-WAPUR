@@ -16,7 +16,7 @@ public class Intake extends Command {
   /** Creates a new intake. */
   public Intake(Loader Loader, boolean isOutake) {
     m_loader = Loader;
-    speed = isOutake ? Constants.outtakeSpeed : Constants.intakeSpeed;
+    speed = isOutake ? Constants.outtakeSpeed : -Constants.intakeSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -32,7 +32,9 @@ public class Intake extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_loader.run(0);
+  }
 
   // Returns true when the command should end.
   @Override
