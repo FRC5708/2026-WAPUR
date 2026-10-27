@@ -77,7 +77,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new Intake(m_Loader, false));
     controller.leftTrigger().whileTrue(new Intake(m_Loader, true));
 
-    //elevator
+    // elevator
     m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
     controller.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
     controller.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));

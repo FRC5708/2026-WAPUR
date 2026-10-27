@@ -11,6 +11,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class travelToSetpoint extends Command {
   /** Creates a new travelToSetpoint. */
   private ElevatorSubsystem m_elevator;
+
   public travelToSetpoint(ElevatorSubsystem elevator) {
     m_elevator = elevator;
     addRequirements(m_elevator);
@@ -24,9 +25,8 @@ public class travelToSetpoint extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        m_elevator.travelToSetpoint();
-    }
-
+    m_elevator.travelToSetpoint();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

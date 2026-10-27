@@ -4,20 +4,20 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-  public SparkMax elevatorMotor1 = new SparkMax(Constants.NonChassis.elevatorMotorID1, MotorType.kBrushless);
-  public SparkMax elevatorMotor2 = new SparkMax(Constants.NonChassis.elevatorMotorID2, MotorType.kBrushless);
+  public SparkMax elevatorMotor1 =
+      new SparkMax(Constants.NonChassis.elevatorMotorID1, MotorType.kBrushless);
+  public SparkMax elevatorMotor2 =
+      new SparkMax(Constants.NonChassis.elevatorMotorID2, MotorType.kBrushless);
   private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
   private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
   private static final double ramprate = .04;
@@ -25,7 +25,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private PIDController m_pid = new PIDController(0.25, 0, 0.01);
 
   private double targetPos = 0.0;
-  private boolean manualMode;  
+  private boolean manualMode;
   private int i = 0;
   // private int desiredPoint = 0;
   // private double driveSpeed = 0.5;
@@ -45,29 +45,28 @@ public class ElevatorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  private void setSpeed(double speed){
-    //Ramp logic, can't change speed by more .05 or 5% power per tick
+  private void setSpeed(double speed) {
+    // Ramp logic, can't change speed by more .05 or 5% power per tick
     double currentSpeed = elevatorMotor1.get();
     double speedDifference = speed - currentSpeed;
-    if (speedDifference > ramprate){
+    if (speedDifference > ramprate) {
       speed = currentSpeed + ramprate;
-    }
-    else if (speedDifference < -ramprate){
+    } else if (speedDifference < -ramprate) {
       speed = currentSpeed + -ramprate;
     }
 
-    //Clamp logic, can't go above .7 or 70% power or go below -.4 or -40% making it unable to break the elevator
-    if (speed > .7){
+    // Clamp logic, can't go above .7 or 70% power or go below -.4 or -40% making it unable to break
+    // the elevator
+    if (speed > .7) {
       speed = .7;
-    }
-    else if (speed < -.4){
+    } else if (speed < -.4) {
       speed = -.4;
     }
-    //This is how we set the speed after the Ramp & Clamp logic
+    // This is how we set the speed after the Ramp & Clamp logic
     elevatorMotor1.set(speed);
-    elevatorMotor2.set(-speed); 
-  } 
-  
+    elevatorMotor2.set(-speed);
+  }
+
   public void elevatorUp(double speed) {
     if (!coralBlockingElevator()) {
       setSpeed(speed);
@@ -77,7 +76,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   private boolean coralBlockingElevator() {
-    //return input.get();
+    // return input.get();
     return false;
   }
 
@@ -101,8 +100,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     setSpeed(0.02);
   }
 
-  public void elevatorStop()
-  {
+  public void elevatorStop() {
     setSpeed(0);
   }
 
@@ -113,69 +111,68 @@ public class ElevatorSubsystem extends SubsystemBase {
     return coralBlockingElevator();
   }
 
-  public void moveToL0(){
+  public void moveToL0() {
     targetPos = 0;
   }
 
-  public void moveToL1(){
+  public void moveToL1() {
     targetPos = Constants.NonChassis.ticksToL1;
   }
 
-  public void moveToL2(){
+  public void moveToL2() {
     targetPos = Constants.NonChassis.ticksToL2;
   }
-  
-  public void moveToL3(){
+
+  public void moveToL3() {
     targetPos = Constants.NonChassis.ticksToL3;
   }
 
-  public void moveToL4(){
+  public void moveToL4() {
     targetPos = Constants.NonChassis.ticksToL4;
   }
 
-//encoder and PID are same number
+  // encoder and PID are same number
   public void resetEncoder() {
     encoder1.setPosition(0.2);
     encoder2.setPosition(0.2);
   }
 
-public double getPosition() {
-  return encoder1.getPosition();
-}
+  public double getPosition() {
+    return encoder1.getPosition();
+  }
 
-public double getPositionEncoder2() {
-  return encoder2.getPosition();
-}
+  public double getPositionEncoder2() {
+    return encoder2.getPosition();
+  }
 
-public void travelToSetpoint() {
-  i+=1;
-  boolean coralBlockingElevator = coralBlockingElevator();
-  double speed = m_pid.calculate(getPosition(), targetPos);
-  SmartDashboard.putBoolean("Manual Mode", manualMode);
-  SmartDashboard.putNumber("Counter", i);
-  SmartDashboard.putBoolean("Photoeye", coralBlockingElevator);
-  SmartDashboard.putNumber("encoder position Motor 1", getPosition());
-  SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
-  if (!manualMode){
-    if(!coralBlockingElevator) {
-      setSpeed(speed);
+  public void travelToSetpoint() {
+    i += 1;
+    boolean coralBlockingElevator = coralBlockingElevator();
+    double speed = m_pid.calculate(getPosition(), targetPos);
+    SmartDashboard.putBoolean("Manual Mode", manualMode);
+    SmartDashboard.putNumber("Counter", i);
+    SmartDashboard.putBoolean("Photoeye", coralBlockingElevator);
+    SmartDashboard.putNumber("encoder position Motor 1", getPosition());
+    SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
+    if (!manualMode) {
+      if (!coralBlockingElevator) {
+        setSpeed(speed);
+      }
+    } else {
+      elevatorHold();
     }
+    SmartDashboard.putNumber("Elevator Speed", speed);
+    SmartDashboard.putNumber("PID position", getPosition());
+    SmartDashboard.putNumber("Target", targetPos);
   }
-  else {
-    elevatorHold();
-  }
-  SmartDashboard.putNumber("Elevator Speed", speed);
-  SmartDashboard.putNumber("PID position", getPosition());
-  SmartDashboard.putNumber("Target", targetPos);
-}
 
-public void manualModeToggle() {
-  manualMode = !manualMode;
-  targetPos = getPosition();
-  SmartDashboard.putBoolean("Manual Mode", manualMode);
-}
+  public void manualModeToggle() {
+    manualMode = !manualMode;
+    targetPos = getPosition();
+    SmartDashboard.putBoolean("Manual Mode", manualMode);
+  }
+
   public double calculatePID() {
     return m_pid.calculate(getPosition());
   }
-
 }

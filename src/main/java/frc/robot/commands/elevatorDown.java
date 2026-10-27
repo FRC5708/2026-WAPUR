@@ -11,6 +11,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class elevatorDown extends Command {
   private ElevatorSubsystem m_elevator;
   private double m_power;
+
   public elevatorDown(ElevatorSubsystem elevator, double power) {
     m_elevator = elevator;
     m_power = power;
