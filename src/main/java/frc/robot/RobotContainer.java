@@ -52,7 +52,8 @@ public class RobotContainer {
 
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController driverController = new CommandXboxController(0);
+  private final CommandXboxController operatorController = new CommandXboxController(1);
 
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
@@ -74,89 +75,59 @@ public class RobotContainer {
 
   private void configureBindings() {
     // intake/outake
-    controller.rightTrigger().whileTrue(new Intake(m_Loader, false));
-    controller.leftTrigger().whileTrue(new Intake(m_Loader, true));
+   operatorController.rightBumper().whileTrue(new Intake(m_Loader, false));
+   operatorController.leftBumper().whileTrue(new Intake(m_Loader, true));
 
     // elevator
-    m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
-    controller.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
-    controller.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
-    controller.x().onTrue(new changeSetpoint(m_elevator, 0));
-    controller.povUp().onTrue(new changeSetpoint(m_elevator, 1));
-    controller.povRight().onTrue(new changeSetpoint(m_elevator, 2));
-    controller.povDown().onTrue(new changeSetpoint(m_elevator, 3));
-    controller.povLeft().onTrue(new changeSetpoint(m_elevator, 4));
+   m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
+   driverController.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
+   driverController.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
+  //  driverController.x().onTrue(new changeSetpoint(m_elevator, 0));
+  //  driverController.povUp().onTrue(new changeSetpoint(m_elevator, 1));
+  //  driverController.povRight().onTrue(new changeSetpoint(m_elevator, 2));
+  //  driverController.povDown().onTrue(new changeSetpoint(m_elevator, 3));
+  //  driverController.povLeft().onTrue(new changeSetpoint(m_elevator, 4));
 
-    controller.y().onTrue(new manualToggly(m_elevator));
-    controller.back().onTrue(new ZeroEncoders(m_elevator));
+   //driverController.y().onTrue(new manualToggly(m_elevator));
+   //driverController.back().onTrue(new ZeroEncoders(m_elevator));
 
     // // Note that X is defined as forward according to WPILib convention,
     // // and Y is defined as to the left according to WPILib convention.
-    // drivetrain.setDefaultCommand(
-    //     // Drivetrain will execute this command periodically
-    //     drivetrain.applyRequest(
-    //         () ->
-    //             drive
-    //                 .withVelocityX(
-    //                     -controller.getLeftY()
-    //                         * MaxSpeed
-    //                         * speedScalar) // Drive forward with negative Y (forward)
-    //                 .withVelocityY(
-    //                     -controller.getLeftX()
-    //                         * MaxSpeed
-    //                         * speedScalar) // Drive left with negative X (left)
-    //                 .withRotationalRate(
-    //                     -controller.getRightX()
-    //                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
-    //         ));
-
+    drivetrain.setDefaultCommand(
+        // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(
+            () ->
+                drive
+                    .withVelocityX(
+                        -driverController.getLeftY()
+                            * MaxSpeed
+                            * speedScalar) // Drive forward with negative Y (forward)
+                    .withVelocityY(
+                        -driverController.getLeftX()
+                            * MaxSpeed
+                            * speedScalar) // Drive left with negative X (left)
+                    .withRotationalRate(
+                        -driverController.getRightX()
+                            * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            ));
     // Idle while the robot is disabled. This ensures the configured
     // neutral mode is applied to the drive motors while disabled.
     final var idle = new SwerveRequest.Idle();
     RobotModeTriggers.disabled()
         .whileTrue(drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
-    // controller.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    // controller.b().whileTrue(drivetrain.applyRequest(() ->
-    //     point.withModuleDirection(new Rotation2d(-controller.getLeftY(), -controller.getLeftX()))
-    // ));
-
-    // toggle creep mode
-    controller
-        .a()
-        .whileTrue(new CreepMode(this)); // if you toggle this on it makes the horrible sound again.
-
-    // // Run SysId routines when holding back/start and X/Y.
-    // // Note that each routine should be run exactly once in a single log.
-    // controller.back().and(controller.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-    // controller.back().and(controller.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-    // controller.start().and(controller.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-    // controller.start().and(controller.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+    // toggle creep mode 
+   driverController.leftStick().and(driverController.rightStick()).toggleOnTrue(new CreepMode(this));
 
     // // Reset the field-centric heading on left bumper press.
-    // controller.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+    driverController.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+    
 
     drivetrain.registerTelemetry(logger::telemeterize);
   }
 
   public Command getAutonomousCommand() {
-    // // Simple drive forward auton
-    // final var idle = new SwerveRequest.Idle();
-    // return Commands.sequence(
-    //     // Reset our field centric heading to match the robot
-    //     // facing away from our alliance station wall (0 deg).
-    //     drivetrain.runOnce(() -> drivetrain.seedFieldCentric(Rotation2d.kZero)),
-    //     // Then slowly drive forward (away from us) for 5 seconds.
-    //     drivetrain.applyRequest(() ->
-    //         drive.withVelocityX(0.5)
-    //             .withVelocityY(0)
-    //             .withRotationalRate(0)
-    //     )
-    //     .withTimeout(5.0),
-    //     // Finally idle for the rest of auton
-    //     drivetrain.applyRequest(() -> idle)
-    // );
-
     return autoChooser.getSelected();
   }
 }

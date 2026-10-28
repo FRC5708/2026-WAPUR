@@ -25,13 +25,13 @@ public class runBallShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    b_shooter.run(speed);
+    b_shooter.run(true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    b_shooter.run(0);
+    b_shooter.run(false);
   }
 
   // Returns true when the command should end.

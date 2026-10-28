@@ -21,6 +21,10 @@ public final class Constants {
   public static final double fastSpeed = 0.5;
   public static final double intakeSpeed = 0.5;
   public static final double outtakeSpeed = 0.5;
+  public static final double DEFAULTSHOOTERSPEED = 0.4;
+
+
+
 
   public class NonChassis {
     public static final int elevatorMotorID1 = 31;

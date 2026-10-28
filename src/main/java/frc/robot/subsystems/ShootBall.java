@@ -7,13 +7,32 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ShootBall extends SubsystemBase {
   /** Creates a new ShootBall. */
   private final TalonFX mot0r = new TalonFX(204);
 
+  private double speed;
 
-  public void run(double power) {
-    mot0r.set(power);
+  public ShootBall(){
+
+    speed = Constants.DEFAULTSHOOTERSPEED;
+  }
+
+
+  public void run(boolean shootEmUp) {
+    if (!shootEmUp) {
+      mot0r.set(0);
+
+    }
+    else {
+      mot0r.set(speed);
+
+    }
+  }
+
+  public void setSpeed(double speedySetor) {
+    speed = speedySetor;
   }
 }
