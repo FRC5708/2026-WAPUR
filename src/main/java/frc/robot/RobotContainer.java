@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +36,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.Loader;
 import frc.robot.subsystems.Shooter;
 
+@Logged
 public class RobotContainer {
   private static Loader m_Loader;
   private static ElevatorSubsystem m_elevator;
