@@ -17,16 +17,25 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
-  public static final double slowSpeed = 0.1;
-  public static final double fastSpeed = 0.5;
+  public static class DriveConstants {
+    public static final double slowSpeed = 0.1;
+    public static final double fastSpeed = 0.5;
+  }
+
+  public static class Shooter {
+    public static final double inIndexSpeed = 0.5;
+    public static final double outIndexSpeed = 0.5;
+
+    public static final double loaderSpeed = 0.5;
+    public static final double loaderOutSpeed = 0.5;
+
+    public static final double defaultShooterSpeed = 0.4;
+  }
+
   public static final double intakeSpeed = 0.5;
   public static final double outtakeSpeed = 0.5;
-  public static final double DEFAULTSHOOTERSPEED = 0.4;
 
-
-
-
-  public class NonChassis {
+  public class Elevator {
     public static final int elevatorMotorID1 = 31;
     public static final int elevatorMotorID2 = 32;
     public static final int milkPlaceMotorID3 = 13;

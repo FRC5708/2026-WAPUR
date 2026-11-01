@@ -5,25 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CreepMode extends Command {
 
   // private boolean creepModeOn = false;
-  private RobotContainer container;
+  // private RobotContainer container;
+  private static CommandSwerveDrivetrain drivetrain;
 
   /** Creates a new CreepMode. */
-  public CreepMode(RobotContainer n_container) {
+  public CreepMode(CommandSwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.container = n_container;
+    // this.container = n_container;
+    this.drivetrain = drivetrain;
+    addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    container.speedScalar = Constants.slowSpeed;
+    // container.speedScalar = Constants.slowSpeed;
+    drivetrain.setCreepMode(!drivetrain.getCreepMode());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +36,7 @@ public class CreepMode extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    container.speedScalar = Constants.fastSpeed;
+    // container.speedScalar = Constants.fastSpeed;
   }
 
   // Returns true when the command should end.

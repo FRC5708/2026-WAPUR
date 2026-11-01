@@ -15,6 +15,8 @@ public class ZeroEncoders extends Command {
   public ZeroEncoders(ElevatorSubsystem elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_elevator = elevator;
+
+    addRequirements(m_elevator);
   }
 
   // Called when the command is initially scheduled.

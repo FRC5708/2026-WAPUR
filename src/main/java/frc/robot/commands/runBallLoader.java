@@ -5,12 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.BallLoader;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class runBallLoader extends Command {
+  private final BallLoader m_ballLoader;
+  private final double speed;
+
   /** Creates a new runBallLoader. */
-  public runBallLoader() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public runBallLoader(BallLoader ballLoader, double speed) {
+    m_ballLoader = ballLoader;
+    this.speed = speed;
+
+    addRequirements(m_ballLoader);
   }
 
   // Called when the command is initially scheduled.
@@ -19,11 +26,15 @@ public class runBallLoader extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_ballLoader.run(speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_ballLoader.run(0);
+  }
 
   // Returns true when the command should end.
   @Override

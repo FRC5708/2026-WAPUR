@@ -14,6 +14,8 @@ public class manualToggly extends Command {
   /** Creates a new manualToggly. */
   public manualToggly(ElevatorSubsystem drive) {
     m_drive = drive;
+
+    addRequirements(m_drive);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

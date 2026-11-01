@@ -15,6 +15,7 @@ public class changeSetpoint extends Command {
     m_elevator = elevator;
     m_level = level;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_elevator);
   }
 
   // Called when the command is initially scheduled.

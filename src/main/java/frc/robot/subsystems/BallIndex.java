@@ -5,21 +5,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-
-
 
 public class BallIndex extends SubsystemBase {
   /** Creates a new BallIndex. */
-
-  private final TalonFX motor8 = new TalonFX(55);
-
+  private final TalonFX motor = new TalonFX(30);
 
   public BallIndex() {}
 
   public void run(double power) {
-    motor8.set(power);
+    motor.set(power);
   }
 }

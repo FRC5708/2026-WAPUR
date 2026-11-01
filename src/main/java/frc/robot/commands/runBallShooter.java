@@ -5,19 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.ShootBall;
+import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class runBallShooter extends Command {
-  private final ShootBall b_shooter;
-  private final double speed;
+  private final Shooter m_shooter;
+
+  // private final double speed;
   /** Creates a new runBallLoader. */
-  public runBallShooter(ShootBall BallShooter, boolean isOutake) {
-    b_shooter = BallShooter;
-    speed = isOutake ? Constants.outtakeSpeed : -Constants.intakeSpeed;
+  public runBallShooter(Shooter shooter) {
+    m_shooter = shooter;
+    // speed = isOutake ? Constants.outtakeSpeed : -Constants.intakeSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
+
+    addRequirements(m_shooter);
   }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -25,13 +28,13 @@ public class runBallShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    b_shooter.run(true);
+    m_shooter.run(false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    b_shooter.run(false);
+    m_shooter.run(true);
   }
 
   // Returns true when the command should end.

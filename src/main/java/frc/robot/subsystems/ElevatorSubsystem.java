@@ -15,9 +15,9 @@ import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
   public SparkMax elevatorMotor1 =
-      new SparkMax(Constants.NonChassis.elevatorMotorID1, MotorType.kBrushless);
+      new SparkMax(Constants.Elevator.elevatorMotorID1, MotorType.kBrushless);
   public SparkMax elevatorMotor2 =
-      new SparkMax(Constants.NonChassis.elevatorMotorID2, MotorType.kBrushless);
+      new SparkMax(Constants.Elevator.elevatorMotorID2, MotorType.kBrushless);
   private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
   private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
   private static final double ramprate = .04;
@@ -116,19 +116,19 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void moveToL1() {
-    targetPos = Constants.NonChassis.ticksToL1;
+    targetPos = Constants.Elevator.ticksToL1;
   }
 
   public void moveToL2() {
-    targetPos = Constants.NonChassis.ticksToL2;
+    targetPos = Constants.Elevator.ticksToL2;
   }
 
   public void moveToL3() {
-    targetPos = Constants.NonChassis.ticksToL3;
+    targetPos = Constants.Elevator.ticksToL3;
   }
 
   public void moveToL4() {
-    targetPos = Constants.NonChassis.ticksToL4;
+    targetPos = Constants.Elevator.ticksToL4;
   }
 
   // encoder and PID are same number

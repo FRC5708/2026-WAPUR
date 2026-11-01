@@ -4,14 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallLoader extends SubsystemBase {
   /** Creates a new BallLoader. */
+  private final TalonFX motor = new TalonFX(32);
+
   public BallLoader() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void run(double power) {
+    motor.set(power);
   }
 }

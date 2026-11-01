@@ -12,11 +12,14 @@ import frc.robot.subsystems.BallIndex;
 public class runBallIndex extends Command {
   private final BallIndex b_indexer;
   private final double speed;
+
   /** Creates a new runBallLoader. */
   public runBallIndex(BallIndex BallIndex, boolean isOutake) {
     b_indexer = BallIndex;
-    speed = isOutake ? Constants.outtakeSpeed : -Constants.intakeSpeed;
+    speed = isOutake ? Constants.Shooter.inIndexSpeed : -Constants.Shooter.outIndexSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
+
+    addRequirements(b_indexer);
   }
 
   // Called when the command is initially scheduled.

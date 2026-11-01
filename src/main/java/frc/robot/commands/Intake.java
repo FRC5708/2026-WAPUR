@@ -18,6 +18,7 @@ public class Intake extends Command {
     m_loader = Loader;
     speed = isOutake ? Constants.outtakeSpeed : -Constants.intakeSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_loader);
   }
 
   // Called when the command is initially scheduled.
