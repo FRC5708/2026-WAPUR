@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.DoubleSupplier;
 
+@Logged
 public class Shooter extends SubsystemBase {
   /** Creates a new ShootBall. */
   private final TalonFX motor = new TalonFX(31);

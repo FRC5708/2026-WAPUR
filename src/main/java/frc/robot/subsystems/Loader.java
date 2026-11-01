@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@Logged
 public class Loader extends SubsystemBase {
   // private final MotorController motor1 = new SparkMax(10, SparkLowLevel.MotorType.kBrushless);
   // private final MotorController motor2 = new SparkMax(11, SparkLowLevel.MotorType.kBrushless);

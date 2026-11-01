@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+@Logged
 public class BallLoader extends SubsystemBase {
   /** Creates a new BallLoader. */
   private final TalonFX motor = new TalonFX(32);
