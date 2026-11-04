@@ -77,6 +77,7 @@ public class RobotContainer {
     m_ShootBall = new Shooter(() -> shootSpeed);
     m_BallLoader = new BallLoader();
 
+    // drivetrain.
     autoChooser = AutoBuilder.buildAutoChooser("Tests");
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
