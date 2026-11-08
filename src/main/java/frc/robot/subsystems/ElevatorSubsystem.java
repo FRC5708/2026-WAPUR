@@ -4,11 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.RelativeEncoder;
+import com.ctre.phoenix6.hardware.CANrange;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,9 +21,10 @@ public class ElevatorSubsystem extends SubsystemBase {
       new SparkMax(Constants.Elevator.elevatorMotorID1, MotorType.kBrushless);
   public SparkMax elevatorMotor2 =
       new SparkMax(Constants.Elevator.elevatorMotorID2, MotorType.kBrushless);
-  private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
-  private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
+  // private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
+  // private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
   private static final double ramprate = .04;
+  private final CANrange heightSensor = new CANrange(0);
 
   private PIDController m_pid = new PIDController(0.25, 0, 0.01);
 
@@ -37,7 +39,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public ElevatorSubsystem() {
     i = 0;
     m_pid.setTolerance(0.3);
-    resetEncoder();
+    // resetEncoder();
     elevatorStop();
     manualMode = false;
   }
@@ -107,8 +109,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public boolean checkPhotoeye() {
-    SmartDashboard.putNumber("encoder position Motor 1", getPosition());
-    SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
+    SmartDashboard.putNumber("Height", getPosition());
+    // SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
     SmartDashboard.putBoolean("Photoeye", coralBlockingElevator());
     return coralBlockingElevator();
   }
@@ -134,18 +136,19 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   // encoder and PID are same number
-  public void resetEncoder() {
-    encoder1.setPosition(0.2);
-    encoder2.setPosition(0.2);
-  }
+  // public void resetEncoder() {
+  //   encoder1.setPosition(0.2);
+  //   encoder2.setPosition(0.2);
+  // }
 
   public double getPosition() {
-    return encoder1.getPosition();
+    return heightSensor.getDistance().getValue().in(Units.Meter);
+    // return encoder1.getPosition();
   }
 
-  public double getPositionEncoder2() {
-    return encoder2.getPosition();
-  }
+  // public double getPositionEncoder2() {
+  //   return encoder2.getPosition();
+  // }
 
   public void travelToSetpoint() {
     i += 1;
@@ -154,8 +157,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Manual Mode", manualMode);
     SmartDashboard.putNumber("Counter", i);
     SmartDashboard.putBoolean("Photoeye", coralBlockingElevator);
-    SmartDashboard.putNumber("encoder position Motor 1", getPosition());
-    SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
+    SmartDashboard.putNumber("Height", getPosition());
+    // SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
     if (!manualMode) {
       if (!coralBlockingElevator) {
         setSpeed(speed);
