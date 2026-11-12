@@ -164,7 +164,7 @@ public class RobotContainer {
         .and(driverController.rightStick())
         .onTrue((new CreepMode(drivetrain)));
     // Reset the field-centric heading on left bumper press.
-    driverController.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+    driverController.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
     drivetrain.registerTelemetry(logger::telemeterize);
   }
