@@ -12,14 +12,14 @@ public class CreepMode extends Command {
 
   // private boolean creepModeOn = false;
   // private RobotContainer container;
-  private static CommandSwerveDrivetrain drivetrain;
+  private final CommandSwerveDrivetrain drivetrain;
 
   /** Creates a new CreepMode. */
   public CreepMode(CommandSwerveDrivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     // this.container = n_container;
     this.drivetrain = drivetrain;
-    addRequirements(drivetrain);
+    addRequirements(this.drivetrain);
   }
 
   // Called when the command is initially scheduled.
