@@ -145,8 +145,7 @@ public class RobotContainer {
                     .withVelocityX(
                         -driverController.getLeftY()
                             * MaxSpeed
-                            * getSpeedScalar()) // Drive forward with negative Y (forward)
-                    .withVelocityY(
+                            * getSpeedScalar() // Drive forward with negative Y (forward)
                         -driverController.getLeftX()
                             * MaxSpeed
                             * getSpeedScalar()) // Drive left with negative X (left)

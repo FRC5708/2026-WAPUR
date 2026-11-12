@@ -336,6 +336,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
           this // Subsystem for requirements
           );
     } catch (Exception ex) {
+      // System.out.println(ex.getMessage());
+
       DriverStation.reportError(
           "Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
     }
