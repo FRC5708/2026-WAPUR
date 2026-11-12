@@ -26,6 +26,7 @@ public class CreepMode extends Command {
   @Override
   public void initialize() {
     // container.speedScalar = Constants.slowSpeed;
+    System.out.println("Changing creep mode");
     drivetrain.setCreepMode(!drivetrain.getCreepMode());
   }
 
@@ -42,6 +43,6 @@ public class CreepMode extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
