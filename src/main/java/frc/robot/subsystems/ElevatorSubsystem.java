@@ -116,23 +116,23 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void moveToL0() {
-    targetPos = 0;
+    targetPos = 0 + Constants.Elevator.distanceSensorHeight.in(Units.Meter);
   }
 
   public void moveToL1() {
-    targetPos = Constants.Elevator.ticksToL1;
+    targetPos = Constants.Elevator.L1.in(Units.Meter);
   }
 
   public void moveToL2() {
-    targetPos = Constants.Elevator.ticksToL2;
+    targetPos = Constants.Elevator.L2.in(Units.Meter);
   }
 
   public void moveToL3() {
-    targetPos = Constants.Elevator.ticksToL3;
+    targetPos = Constants.Elevator.L3.in(Units.Meter);
   }
 
   public void moveToL4() {
-    targetPos = Constants.Elevator.ticksToL4;
+    targetPos = Constants.Elevator.L4.in(Units.Meter);
   }
 
   // encoder and PID are same number
@@ -142,7 +142,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   // }
 
   public double getPosition() {
-    return heightSensor.getDistance().getValue().in(Units.Meter);
+    return heightSensor.getDistance().getValue().in(Units.Meter) - Constants.Elevator.distanceSensorHeight.in(Units.Meter);
     // return encoder1.getPosition();
   }
 

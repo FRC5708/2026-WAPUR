@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Distance;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -44,9 +46,17 @@ public final class Constants {
     public static final double millisDownL4 = 2100;
     public static final double millisToSpit = 250;
     public static final double millisToIntake = 800;
-    public static final double ticksToL1 = 17.5;
-    public static final double ticksToL2 = 34.2;
-    public static final double ticksToL3 = 49.7;
-    public static final double ticksToL4 = 61.3; // added 3
+
+    // public static final double ticksToL1 = 17.5;
+    // public static final double ticksToL2 = 34.2;
+    // public static final double ticksToL3 = 49.7;
+    // public static final double ticksToL4 = 61.3; // added 3
+
+    public static final Distance L1 = Distance.ofRelativeUnits(0.0,Units.Meter);
+    public static final Distance L2 = Distance.ofRelativeUnits(0.0,Units.Meter);
+    public static final Distance L3 = Distance.ofRelativeUnits(0.0,Units.Meter);
+    public static final Distance L4 = Distance.ofRelativeUnits(0.0,Units.Meter);
+
+    public static final Distance distanceSensorHeight = Distance.ofRelativeUnits(0.0,Units.Meter);
   }
 }
