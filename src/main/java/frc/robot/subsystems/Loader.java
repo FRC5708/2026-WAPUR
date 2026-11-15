@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Loader extends SubsystemBase {
   // private final MotorController motor1 = new SparkMax(10, SparkLowLevel.MotorType.kBrushless);
   // private final MotorController motor2 = new SparkMax(11, SparkLowLevel.MotorType.kBrushless);
-  private final TalonFX motor1 = new TalonFX(10);
-  private final TalonFX motor2 = new TalonFX(11);
+  private final TalonFX motor1 = new TalonFX(20);
+  private final TalonFX motor2 = new TalonFX(21);
 
   public Loader() {}
 

@@ -12,7 +12,7 @@ import java.util.function.DoubleSupplier;
 @Logged
 public class Shooter extends SubsystemBase {
   /** Creates a new ShootBall. */
-  private final TalonFX motor = new TalonFX(31);
+  private final TalonFX motor = new TalonFX(22);
 
   private DoubleSupplier speedSupplier;
 

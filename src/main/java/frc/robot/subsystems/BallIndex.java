@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 @Logged
 public class BallIndex extends SubsystemBase {
   /** Creates a new BallIndex. */
-  private final TalonFX motor = new TalonFX(30);
+  private final TalonFX motor = new TalonFX(24);
 
   public BallIndex() {}
 
