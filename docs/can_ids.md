@@ -28,3 +28,6 @@ ball index 44 (SparkMax)
 
 elevator motor1 31 (kraken)
 elevator motor2 32 (kraken)
+
+range sensor 0 (CANrange)
+upper bound sensor 1 (DigitalInput)

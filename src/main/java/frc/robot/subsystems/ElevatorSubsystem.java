@@ -36,7 +36,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   // private int desiredPoint = 0;
   // private double driveSpeed = 0.5;
 
-  DigitalInput input = new DigitalInput(1);
+  DigitalInput upperBound = new DigitalInput(1);
 
   public ElevatorSubsystem() {
     i = 0;
@@ -75,7 +75,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void elevatorUp(double speed) {
     if (!coralBlockingElevator()) {
-      setSpeed(speed);
+      if (!upperBound.get()) {// if not touching upper bound
+        setSpeed(speed);
+      }
     } else {
       System.out.println("Elevator Blocked By Coral");
     }
@@ -163,7 +165,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
     if (!manualMode) {
       if (!coralBlockingElevator) {
-        setSpeed(speed);
+        if (!upperBound.get()) { // not touching upper bound
+          setSpeed(speed);
+        }
       }
     } else {
       elevatorHold();
