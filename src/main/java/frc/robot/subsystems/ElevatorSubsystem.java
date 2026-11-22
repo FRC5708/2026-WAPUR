@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.CANrange;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
+// import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
+// import com.revrobotics.spark.SparkLowLevel.MotorType;
+// import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.Units;
@@ -17,10 +19,10 @@ import frc.robot.Constants;
 
 @Logged
 public class ElevatorSubsystem extends SubsystemBase {
-  public SparkMax elevatorMotor1 =
-      new SparkMax(Constants.Elevator.elevatorMotorID1, MotorType.kBrushless);
-  public SparkMax elevatorMotor2 =
-      new SparkMax(Constants.Elevator.elevatorMotorID2, MotorType.kBrushless);
+  public TalonFXS elevatorMotor1 =
+      new TalonFXS(Constants.Elevator.elevatorMotorID1);
+  public TalonFXS elevatorMotor2 =
+      new TalonFXS(Constants.Elevator.elevatorMotorID2);
   // private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
   // private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
   private static final double ramprate = .04;
