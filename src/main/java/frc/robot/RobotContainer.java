@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.CreepMode;
 import frc.robot.commands.Intake;
+import frc.robot.commands.changeSetpoint;
 // import frc.robot.commands.ZeroEncoders;
 // import frc.robot.commands.changeSetpoint;
 import frc.robot.commands.elevatorDown;
@@ -89,14 +90,14 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    operatorController
+    driverController
         .rightBumper()
         .whileTrue(new runBallLoader(m_BallLoader, Constants.Shooter.loaderSpeed));
-    operatorController
+    driverController
         .leftBumper()
         .whileTrue(
             new runBallLoader(m_BallLoader, -Constants.Shooter.loaderOutSpeed)); // outtake balls
-    operatorController.rightTrigger().whileTrue(new runBallShooter(m_ShootBall));
+    operatorController.rightBumper().whileTrue(new runBallShooter(m_ShootBall));
     // operatorController.povUp().onTrue(new changeShootSpeed(m_ShootBall, 0.1));
     // operatorController.povDown().onTrue(new changeShootSpeed(m_ShootBall, -0.1));
     operatorController
@@ -121,13 +122,13 @@ public class RobotContainer {
                 }));
 
     // intake/outake
-    driverController.rightBumper().whileTrue(new Intake(m_Loader, false));
-    driverController.leftBumper().whileTrue(new Intake(m_Loader, true));
+    driverController.rightTrigger().whileTrue(new Intake(m_Loader, false));
+    driverController.leftTrigger().whileTrue(new Intake(m_Loader, true));
 
     // elevator
     m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
-    driverController.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
-    driverController.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
+    operatorController.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
+    operatorController.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
     //  driverController.x().onTrue(new changeSetpoint(m_elevator, 0));
     //  driverController.povUp().onTrue(new changeSetpoint(m_elevator, 1));
     //  driverController.povRight().onTrue(new changeSetpoint(m_elevator, 2));
@@ -167,6 +168,11 @@ public class RobotContainer {
         .onTrue((new CreepMode(drivetrain)));
     // Reset the field-centric heading on left bumper press.
     driverController.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+    //setpoints
+    operatorController.b().onTrue(new changeSetpoint(m_elevator, 2)); // to top
+    operatorController.x().onTrue(new changeSetpoint(m_elevator, 1)); //to middle, might need to change number
+    operatorController.y().onTrue(new changeSetpoint(m_elevator, 0)); //to bottom, might need to change number
 
     drivetrain.registerTelemetry(logger::telemeterize);
   }

@@ -11,6 +11,7 @@ import com.ctre.phoenix6.hardware.TalonFXS;
 // import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -74,12 +75,23 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void elevatorUp(double speed) {
-    if (!coralBlockingElevator()) {
-      if (!upperBound.get()) {// if not touching upper bound
-        setSpeed(speed);
+    if (manualMode) {
+      if (!coralBlockingElevator()) {
+        if (!upperBound.get()) {// if not touching upper bound
+          setSpeed(speed);
+        }
+      } else {
+        System.out.println("Elevator Blocked By Coral");
       }
-    } else {
-      System.out.println("Elevator Blocked By Coral");
+    }
+    else {
+      targetPos += Constants.Elevator.distanceChange.in(Units.Meter);
+      if (targetPos < Constants.Elevator.lowest.in(Units.Meter)) {
+        targetPos = Constants.Elevator.lowest.in(Units.Meter);
+      }
+      if (targetPos > Constants.Elevator.highest.in(Units.Meter)) {
+        targetPos = Constants.Elevator.highest.in(Units.Meter);
+      }
     }
   }
 
@@ -97,10 +109,21 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void elevatorDown(double speed) {
-    if (!coralBlockingElevator()) {
-      setSpeed(speed);
-    } else {
-      System.out.println("Elevator Blocked By Coral");
+    if (manualMode) {
+      if (!coralBlockingElevator()) {
+        setSpeed(speed);
+      } else {
+        System.out.println("Elevator Blocked By Coral");
+      }
+    }
+    else {
+      targetPos -= Constants.Elevator.distanceChange.in(Units.Meter);
+      if (targetPos < Constants.Elevator.lowest.in(Units.Meter)) {
+        targetPos = Constants.Elevator.lowest.in(Units.Meter);
+      }
+      if (targetPos > Constants.Elevator.highest.in(Units.Meter)) {
+        targetPos = Constants.Elevator.highest.in(Units.Meter);
+      }
     }
   }
 
@@ -120,7 +143,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void moveToL0() {
-    targetPos = 0 + Constants.Elevator.distanceSensorHeight.in(Units.Meter);
+    targetPos = Constants.Elevator.lowest.in(Units.Meter);
   }
 
   public void moveToL1() {
