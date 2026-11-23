@@ -53,8 +53,8 @@ public class RobotContainer {
           .in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
-  private final SwerveRequest.RobotCentric drive =
-      new SwerveRequest.RobotCentric()
+  private final SwerveRequest.FieldCentric drive =
+      new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1)
           .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
           .withDriveRequestType(
@@ -127,8 +127,8 @@ public class RobotContainer {
 
     // elevator
     m_elevator.setDefaultCommand(new travelToSetpoint(m_elevator));
-    operatorController.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.53));
-    operatorController.rightTrigger().whileTrue(new elevatorUp(m_elevator, .53));
+    operatorController.leftTrigger().whileTrue(new elevatorDown(m_elevator, -.25));
+    operatorController.rightTrigger().whileTrue(new elevatorUp(m_elevator, .25));
     //  driverController.x().onTrue(new changeSetpoint(m_elevator, 0));
     //  driverController.povUp().onTrue(new changeSetpoint(m_elevator, 1));
     //  driverController.povRight().onTrue(new changeSetpoint(m_elevator, 2));
@@ -166,7 +166,7 @@ public class RobotContainer {
         .leftStick()
         .and(driverController.rightStick())
         .onTrue((new CreepMode(drivetrain)));
-    // Reset the field-centric heading on left bumper press.
+    // Reset the field-centric heading on back.
     driverController.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
     //setpoints

@@ -11,7 +11,7 @@ import com.ctre.phoenix6.hardware.TalonFXS;
 // import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.units.DistanceUnit;
+// import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,7 +44,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_pid.setTolerance(0.3);
     // resetEncoder();
     elevatorStop();
-    manualMode = false;
+    manualMode = true;
   }
 
   @Override
@@ -53,6 +53,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   private void setSpeed(double speed) {
+    System.out.println("Setting speed");
     // Ramp logic, can't change speed by more .05 or 5% power per tick
     double currentSpeed = elevatorMotor1.get();
     double speedDifference = speed - currentSpeed;
@@ -69,6 +70,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     } else if (speed < -.4) {
       speed = -.4;
     }
+    System.out.println(speed);
     // This is how we set the speed after the Ramp & Clamp logic
     elevatorMotor1.set(speed);
     elevatorMotor2.set(-speed);
@@ -77,9 +79,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void elevatorUp(double speed) {
     if (manualMode) {
       if (!coralBlockingElevator()) {
-        if (!upperBound.get()) {// if not touching upper bound
+        // if (!upperBound.get()) {// if not touching upper bound
+          System.out.println("elevator down");
           setSpeed(speed);
-        }
+        // }
       } else {
         System.out.println("Elevator Blocked By Coral");
       }
@@ -111,6 +114,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void elevatorDown(double speed) {
     if (manualMode) {
       if (!coralBlockingElevator()) {
+        System.out.println("elevator down");
         setSpeed(speed);
       } else {
         System.out.println("Elevator Blocked By Coral");
@@ -128,7 +132,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void elevatorHold() {
-    setSpeed(0.02);
+    // setSpeed(0.02);
   }
 
   public void elevatorStop() {
@@ -187,13 +191,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Height", getPosition());
     // SmartDashboard.putNumber("encoder position Motor 2", getPositionEncoder2());
     if (!manualMode) {
+      System.out.println("in non manual mode");
       if (!coralBlockingElevator) {
         if (!upperBound.get()) { // not touching upper bound
           setSpeed(speed);
         }
       }
     } else {
-      elevatorHold();
+      // elevatorHold();
+      elevatorStop();
     }
     SmartDashboard.putNumber("Elevator Speed", speed);
     SmartDashboard.putNumber("PID position", getPosition());
