@@ -20,10 +20,8 @@ import frc.robot.Constants;
 
 @Logged
 public class ElevatorSubsystem extends SubsystemBase {
-  public TalonFXS elevatorMotor1 =
-      new TalonFXS(Constants.Elevator.elevatorMotorID1);
-  public TalonFXS elevatorMotor2 =
-      new TalonFXS(Constants.Elevator.elevatorMotorID2);
+  public TalonFXS elevatorMotor1 = new TalonFXS(Constants.Elevator.elevatorMotorID1);
+  public TalonFXS elevatorMotor2 = new TalonFXS(Constants.Elevator.elevatorMotorID2);
   // private RelativeEncoder encoder1 = elevatorMotor1.getEncoder();
   // private RelativeEncoder encoder2 = elevatorMotor2.getEncoder();
   private static final double ramprate = .04;
@@ -80,14 +78,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     if (manualMode) {
       if (!coralBlockingElevator()) {
         // if (!upperBound.get()) {// if not touching upper bound
-          System.out.println("elevator down");
-          setSpeed(speed);
+        System.out.println("elevator down");
+        setSpeed(speed);
         // }
       } else {
         System.out.println("Elevator Blocked By Coral");
       }
-    }
-    else {
+    } else {
       targetPos += Constants.Elevator.distanceChange.in(Units.Meter);
       if (targetPos < Constants.Elevator.lowest.in(Units.Meter)) {
         targetPos = Constants.Elevator.lowest.in(Units.Meter);
@@ -119,8 +116,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       } else {
         System.out.println("Elevator Blocked By Coral");
       }
-    }
-    else {
+    } else {
       targetPos -= Constants.Elevator.distanceChange.in(Units.Meter);
       if (targetPos < Constants.Elevator.lowest.in(Units.Meter)) {
         targetPos = Constants.Elevator.lowest.in(Units.Meter);
@@ -173,7 +169,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   // }
 
   public double getPosition() {
-    return heightSensor.getDistance().getValue().in(Units.Meter) - Constants.Elevator.distanceSensorHeight.in(Units.Meter);
+    return heightSensor.getDistance().getValue().in(Units.Meter)
+        - Constants.Elevator.distanceSensorHeight.in(Units.Meter);
     // return encoder1.getPosition();
   }
 

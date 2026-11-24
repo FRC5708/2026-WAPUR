@@ -7,14 +7,13 @@ package frc.robot.subsystems;
 // import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 @Logged
 public class BallLoader extends SubsystemBase {
   /** Creates a new BallLoader. */
-  private final SparkMax motor = new SparkMax(43,MotorType.kBrushless);
+  private final SparkMax motor = new SparkMax(43, MotorType.kBrushless);
 
   public BallLoader() {}
 

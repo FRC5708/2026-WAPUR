@@ -154,8 +154,7 @@ public class RobotContainer {
                     .withRotationalRate(
                         -driverController.getRightX()
                             * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            )
-          );
+            ));
     // Idle while the robot is disabled. This ensures the configured
     // neutral mode is applied to the drive motors while disabled.
     final var idle = new SwerveRequest.Idle();
@@ -169,10 +168,14 @@ public class RobotContainer {
     // Reset the field-centric heading on back.
     driverController.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
-    //setpoints
+    // setpoints
     operatorController.b().onTrue(new changeSetpoint(m_elevator, 2)); // to top
-    operatorController.x().onTrue(new changeSetpoint(m_elevator, 1)); //to middle, might need to change number
-    operatorController.y().onTrue(new changeSetpoint(m_elevator, 0)); //to bottom, might need to change number
+    operatorController
+        .x()
+        .onTrue(new changeSetpoint(m_elevator, 1)); // to middle, might need to change number
+    operatorController
+        .y()
+        .onTrue(new changeSetpoint(m_elevator, 0)); // to bottom, might need to change number
 
     drivetrain.registerTelemetry(logger::telemeterize);
   }

@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Distance;
 
@@ -52,15 +53,17 @@ public final class Constants {
     // public static final double ticksToL3 = 49.7;
     // public static final double ticksToL4 = 61.3; // added 3
 
-    //TODO all of these need to be set
-    public static final Distance L1 = Distance.ofRelativeUnits(0.0,Units.Meter);
-    public static final Distance L2 = Distance.ofRelativeUnits(0.0,Units.Meter);
-    public static final Distance L3 = Distance.ofRelativeUnits(0.0,Units.Meter);
-    public static final Distance L4 = Distance.ofRelativeUnits(0.0,Units.Meter);
-    public static final Distance lowest = Distance.ofRelativeUnits(0.0, Units.Meter); //should be lowest elevator can go
-    public static final Distance highest = Distance.ofRelativeUnits(0.0, Units.Meter); //should be highest elevator can go
+    // TODO all of these need to be set
+    public static final Distance L1 = Distance.ofRelativeUnits(0.0, Units.Meter);
+    public static final Distance L2 = Distance.ofRelativeUnits(0.0, Units.Meter);
+    public static final Distance L3 = Distance.ofRelativeUnits(0.0, Units.Meter);
+    public static final Distance L4 = Distance.ofRelativeUnits(0.0, Units.Meter);
+    public static final Distance lowest =
+        Distance.ofRelativeUnits(0.0, Units.Meter); // should be lowest elevator can go
+    public static final Distance highest =
+        Distance.ofRelativeUnits(0.0, Units.Meter); // should be highest elevator can go
 
-    public static final Distance distanceSensorHeight = Distance.ofRelativeUnits(0.0,Units.Meter);
+    public static final Distance distanceSensorHeight = Distance.ofRelativeUnits(0.0, Units.Meter);
 
     public static final Distance distanceChange = Distance.ofRelativeUnits(0.0, Units.Meter);
   }

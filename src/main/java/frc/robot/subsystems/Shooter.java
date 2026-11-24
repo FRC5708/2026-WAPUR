@@ -5,9 +5,8 @@
 package frc.robot.subsystems;
 
 // import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.DoubleSupplier;
@@ -15,7 +14,7 @@ import java.util.function.DoubleSupplier;
 @Logged
 public class Shooter extends SubsystemBase {
   /** Creates a new ShootBall. */
-  private final SparkMax motor = new SparkMax(42,MotorType.kBrushless);
+  private final SparkMax motor = new SparkMax(42, MotorType.kBrushless);
 
   private DoubleSupplier speedSupplier;
 
